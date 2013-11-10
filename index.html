@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>Select Record in MySQL Database</title>
+</head>
+<body>
+<?php
+$dbhost = 'testdb.cwsnlhwgdhwm.us-east-1.rds.amazonaws.com:3306';
+$dbuser = 'jonatans';
+$dbpass = 'jonatans';
+$conn = mysql_connect($dbhost, $dbuser, $dbpass);
+if(! $conn )
+{
+  die('Could not connect: ' . mysql_error());
+}
+$sql = 'SELECT Id, curveID, startVertID
+        FROM testDB1.Curves';
+
+mysql_select_db('CURVES');
+$retval = mysql_query( $sql, $conn );
+if(! $retval )
+{
+  die('Could not get data: ' . mysql_error());
+}
+while($row = mysql_fetch_array($retval, MYSQL_ASSOC))
+{
+    echo "ID :{$row['ID']}  <br> ".
+         "curveID: {$row['curveID']} <br> ".
+         "startVertID: {$row['startVertID']} <br> ".
+         "--------------------------------<br>";
+} 
+echo "Fetched data successfully\n";
+mysql_close($conn);
+?>
+</body>
+</html>
